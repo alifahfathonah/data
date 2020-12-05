@@ -15,7 +15,7 @@
     <div class="card-body">
         <?= $this->session->flashdata('message'); ?>
         <a href="" class="btn btn-primary mb-3" data-toggle="modal" data-target="#NewIduka">TAMBAH GURU</a>
-        <a href="<?= base_url('admin/tambahsiswa'); ?>" class="btn btn-primary mb-3">TAMBAH SISWA</a>
+        <a href="<?= base_url('admin/tambahsiswa'); ?>" class="btn btn-primary mb-3">DAFTAR PENDAMPING</a>
         <?php if (validation_errors()) : ?>
             <div class=" alert alert-danger" role="alert">
                 <?= validation_errors(); ?>
