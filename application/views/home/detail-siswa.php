@@ -9,7 +9,7 @@
         </tr>
         <tr>
             <td>
-                Nama
+                Nama Siswa
             </td>
             <td>: <?= $siswa['name']; ?></td>
         </tr>
