@@ -126,4 +126,24 @@ class Home extends CI_Controller
         $mpdf->WriteHTML($html2);
         $mpdf->Output('Surat Permohonan PI.pdf', \Mpdf\Output\Destination::INLINE);
     }
+
+    public function detailsiswa($id)
+    {
+        $data['title'] = 'Profile Siswa';
+        $data['siswa'] = $this->Admin_model->getSiswaById($id);
+
+        $this->load->view('home/detail-siswa', $data);
+        $mpdf = new \Mpdf\Mpdf(
+            [
+                'mode' => 'utf-8',
+                'format' => 'A4',
+                'orientation' => 'P',
+                'setAutoTopMargin' => false
+            ]
+        );
+
+        $html = $this->load->view('home/detail-siswa', [], true);
+        $mpdf->WriteHTML($html);
+        $mpdf->Output('Detail Siswa.pdf', \Mpdf\Output\Destination::INLINE);
+    }
 }

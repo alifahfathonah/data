@@ -12,6 +12,14 @@ class Admin_model extends CI_Model
     {
         return $this->db->get_where('tbl_jurusan')->result_array();
     }
+    public function Guru()
+    {
+        return $this->db->get_where('tbl_guru')->result_array();
+    }
+    public function getGuruby($id)
+    {
+        return $this->db->get_where('tbl_guru', ['id' => $id])->row_array();
+    }
     public function Jurusan()
     {
         $query = "SELECT `master`.*,`tbl_jurusan`.`jurusan`

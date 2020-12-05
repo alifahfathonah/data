@@ -69,8 +69,14 @@
                         </tr>
                         <tr>
                             <td align="center">
-                                <h4><?= $siswa['guru_pendamping']; ?></h4>
-                                <h5><?= $siswa['hp_pendamping']; ?></h5>
+                                <h4><u><?= $siswa['guru_pendamping']; ?></u></h4>
+                                <h5>Telp/HP. <?= $siswa['hp_pendamping']; ?></h5>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align="center"><br />
+                                <b>SCAN ME</b><br />
+                                <barcode code="<?= base_url('home/detailsiswa/') . $siswa['id']; ?>" size="1.4" type="QR" error="M" class="barcode" />
                             </td>
                         </tr>
                     </table>

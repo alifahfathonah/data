@@ -24,6 +24,7 @@
                             <th>L/P</th>
                             <th>Kelas</th>
                             <th>Kompetensi Keahlian</th>
+                            <th>Tahun Pelajaran</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -36,6 +37,7 @@
                                 <td><?= $d['jk']; ?></td>
                                 <td><?= $d['kelas']; ?></td>
                                 <td><?= $d['jurusan']; ?></td>
+                                <td><?= $d['tp']; ?></td>
                             </tr>
                             <?php $i++; ?>
                         <?php endforeach; ?>

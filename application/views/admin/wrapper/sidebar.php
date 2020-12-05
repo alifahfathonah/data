@@ -13,68 +13,66 @@
             </a>
 
             <hr class="sidebar-divider">
+            <!-- Heading -->
+            <div class="sidebar-heading">
+                Admin PKL
+            </div>
 
-            <!-- Query Menu -->
-            <?php
-            $role_id = $this->session->userdata('role_id');
-            $querymenu = "SELECT `user_menu`.`id`,`menu`
-                            FROM `user_menu` JOIN `user_access_menu`
-                              ON `user_menu`.`id` = `user_access_menu`.`menu_id`
-                           WHERE `user_access_menu`.`role_id` = $role_id
-                        ORDER BY `user_access_menu`.`menu_id` ASC
-                            ";
-
-            $menu = $this->db->query($querymenu)->result_array();
-            ?>
-            <!-- LOOPING MENU -->
-            <?php foreach ($menu as $m) : ?>
-                <!-- Heading -->
-                <div class="sidebar-heading">
-                    <?= $m['menu']; ?>
+            <!-- Nav Item -->
+            <li class="nav-item">
+                <a class="nav-link pb-0" href="<?= base_url('admin'); ?>">
+                    <i class="fas fa-tachometer-alt"></i>
+                    <span>Dashboard</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link pb-0" href="<?= base_url('admin/profile'); ?>">
+                    <i class="fas fa-tachometer-alt"></i>
+                    <span>My Profile</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link collapsed pb-0" href="#" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseTwo">
+                    <i class="fas fa-archive"></i>
+                    <span>Data PKL</span>
+                </a>
+                <div id="collapseOne" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Daftar Menu</h6>
+                        <a class="collapse-item" href="<?= base_url('admin/data'); ?>">Data Siswa</a>
+                        <a class="collapse-item" href="<?= base_url('admin/nilai'); ?>">Nilai Siswa</a>
+                        <a class="collapse-item" href="<?= base_url('admin/sertifikat'); ?>">Cetak Sertifikat</a>
+                    </div>
                 </div>
-
-                <!-- SUB MENU -->
-                <?php
-                $menuId = $m['id'];
-                $querySubMenu = "SELECT *
-                                    FROM `user_sub_menu` JOIN `user_menu`
-                                    ON `user_sub_menu`.`menu_id` = `user_menu`.`id`
-                                    WHERE `user_sub_menu`.`menu_id` = $menuId
-                                    AND `user_sub_menu`.`is_active` = 1
-                ";
-                $subMenu = $this->db->query($querySubMenu)->result_array();
-                ?>
-                <?php foreach ($subMenu as $sm) : ?>
-                    <?php if ($title == $sm['title']) : ?>
-                        <li class="nav-item active">
-                        <?php else : ?>
-                        <li class="nav-item">
-                        <?php endif; ?>
-                        <a class="nav-link pb-0" href="<?= base_url($sm['url']); ?>">
-                            <i class="<?= $sm['icon']; ?>"></i>
-                            <span><?= $sm['title']; ?></span></a>
-                        </li>
-                    <?php endforeach; ?>
-                    <!-- Divider -->
-                    <hr class="sidebar-divider mt-3">
-                <?php endforeach; ?>
-
-                <!-- Nav Item -->
-                <li class="nav-item">
-                    <a class="nav-link pb-0" href="<?= base_url('auth/logout'); ?>">
-                        <i class="fas fa-trash-restore-alt"></i>
-                        <span>Reset Password</span></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="<?= base_url('auth/logout'); ?>">
-                        <i class="fas fa-sign-out-alt"></i>
-                        <span>Logout</span></a>
-                </li>
-                <!-- Divider -->
-                <hr class="sidebar-divider d-none d-md-block">
-                <!-- Sidebar Toggler (Sidebar) -->
-                <div class="text-center d-none d-md-inline">
-                    <button class="rounded-circle border-0" id="sidebarToggle"></button>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link collapsed pb-0" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+                    <i class="fas fa-archive"></i>
+                    <span>Master Data</span>
+                </a>
+                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Daftar Menu</h6>
+                        <a class="collapse-item" href="<?= base_url('admin/iduka'); ?>">Data Iduka</a>
+                        <a class="collapse-item" href="<?= base_url('admin/guru'); ?>">Data Guru</a>
+                        <a class="collapse-item" href="<?= base_url('admin/suratpkl/1'); ?>">Surat Permohonan</a>
+                        <a class="collapse-item" href="<?= base_url('admin/pengumuman'); ?>">Pengumuman</a>
+                    </div>
                 </div>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link pb-0" href="<?= base_url('admin/resetpassword'); ?>">
+                    <i class="fas fa-trash-restore-alt"></i>
+                    <span>Reset Password</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="<?= base_url('auth/logout'); ?>">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Logout</span></a>
+            </li>
+            <!-- Divider -->
+            <hr class="sidebar-divider d-none d-md-block">
+            <!-- Sidebar Toggler (Sidebar) -->
+            <div class="text-center d-none d-md-inline">
+                <button class="rounded-circle border-0" id="sidebarToggle"></button>
+            </div>
         </ul>
         <!-- End of Sidebar -->

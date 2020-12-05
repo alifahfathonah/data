@@ -919,4 +919,104 @@ class Admin extends CI_Controller
             redirect('admin/suratpkl/1');
         }
     }
+
+    public function Guru()
+    {
+        $data['title'] = 'Data Guru';
+        $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
+        $data['guru'] = $this->Admin_model->Guru();
+        $data['data'] =  $this->Admin_model->getJurusan();
+        // $data['guru2'] =  $this->Admin_model->getGuruby();
+
+        $this->load->view('wrapper/header', $data);
+        $this->load->view('admin/wrapper/sidebar', $data);
+        $this->load->view('wrapper/topbar', $data);
+        $this->load->view('admin/guru', $data);
+        $this->load->view('wrapper/footer');
+    }
+    public function editGuru($id)
+    {
+        $data['title'] = 'Edit Data Pendamping';
+        $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
+        $data['data'] =  $this->Admin_model->getJurusan();
+        $data['guru'] =  $this->Admin_model->getGuruby($id);
+
+        $this->form_validation->set_rules('nama', 'nama', 'required');
+        $this->form_validation->set_rules('nbm', 'nbm', 'required');
+        if ($this->form_validation->run() == false) {
+            $this->load->view('wrapper/header', $data);
+            $this->load->view('admin/wrapper/sidebar', $data);
+            $this->load->view('wrapper/topbar', $data);
+            $this->load->view('admin/edit-guru', $data);
+            $this->load->view('wrapper/footer');
+        } else {
+            $data = [
+                'nama'  => htmlspecialchars($this->input->post('nama', true)),
+                'nbm'  => htmlspecialchars($this->input->post('nbm', true)),
+                'hp'  => htmlspecialchars($this->input->post('hp', true)),
+                'lokasi'  => htmlspecialchars($this->input->post('lokasi', true)),
+            ];
+            $this->db->where('id', $this->input->post('id'));
+            $this->db->update('tbl_guru', $data);
+            $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Data berhasil di update!!!</div>');
+            redirect('admin/guru');
+        }
+    }
+
+    public function tambahsiswa()
+    {
+        $data['title'] = 'Data Siswa';
+        $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
+        $this->load->model('Menu_model', 'menu');
+        $tp = $this->input->get('tp');
+        $jurusan = $this->input->get('jurusan');
+        $data['tp'] = $this->Admin_model->getTP();
+        $data['jurusan'] = $this->Admin_model->getJurusan();
+        $data['data'] = $this->db->get_where('master', ['tp' => $tp, 'jurusan' => $jurusan,])->result_array();
+        $data['guru'] = $this->db->get_where('tbl_guru')->result_array();
+
+        $this->form_validation->set_rules('nis[]', 'NIS', 'required');
+        if ($this->form_validation->run() == false) {
+            $this->load->view('wrapper/header', $data);
+            $this->load->view('admin/wrapper/sidebar', $data);
+            $this->load->view('wrapper/topbar', $data);
+            $this->load->view('admin/tambah-siswa', $data);
+            $this->load->view('wrapper/footer');
+        } else {
+            $nis = $this->input->post('nis');
+            $result = array();
+            foreach ($nis as $key => $val) {
+                $result[] = array(
+                    "nis" => $nis[$key],
+                    "guru_pendamping"  => $_POST['guru_pendamping'][$key],
+                );
+            }
+            $this->db->update_batch('master', $result, 'nis');
+            $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Data pendamping berhasil di update!!!</div>');
+            redirect('admin/guru');
+        }
+    }
+
+    public function inputpendamping()
+    {
+        $data = [
+            'guru_pendamping'  => htmlspecialchars($this->input->post('guru_pendamping', true)),
+        ];
+        $this->db->where('nis', $this->input->post('nis'));
+        $this->db->update('master', $data);
+        $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Data berhasil di update!!!</div>');
+    }
+
+
+    public function resetpassword()
+    {
+        $data['title'] = 'Reset Password';
+        $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
+
+        $this->load->view('wrapper/header', $data);
+        $this->load->view('admin/wrapper/sidebar', $data);
+        $this->load->view('wrapper/topbar', $data);
+        $this->load->view('admin/reset-password', $data);
+        $this->load->view('wrapper/footer');
+    }
 }
